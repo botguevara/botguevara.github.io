@@ -27,10 +27,10 @@
 	<![endif]-->
 	<script>
 		const CHAIN_ID = 8217;
-		const PRICE = 180;
+		const PRICE = 60;
 		const DROPS_CONTRACT_ADDRESS = "0x6448783979b734820D6Fd4E17a6c97231104E5fd";
 		const mintingDate = "2022년 4월 30일 오후 10시";
-		const totalMintingCount = "1000";
+		const totalMintingCount = "1448";
 
 		const DROPS_ABI = [
 			{
@@ -137,6 +137,7 @@
 		const displayText = () => {
 			document.getElementById("mintingDate").innerHTML = mintingDate;
 			document.getElementById("totalMintingCount").innerHTML = totalMintingCount;
+			document.getElementById("remainMintingCount").innerHTML = totalMintingCount;
 			document.getElementById("mintingPrice").innerHTML = PRICE * count;
 
 			$("div.info_btn > a.i_btn01").empty();
