@@ -1,0 +1,5 @@
+@font-face {
+  font-family: 'gomarice_goma_block';
+  src: url(./gomarice_goma_block.woff) format('woff'),
+       url(./gomarice_goma_block.woff2) format('woff2');
+}
