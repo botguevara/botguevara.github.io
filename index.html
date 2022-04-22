@@ -1,1 +1,231 @@
-<!doctype html><html lang="en" style="height:100%"><head><meta charset="utf-8"/><link rel="icon" href="/favicon.ico"/><meta name="viewport" content="width=device-width,initial-scale=1"/><meta name="theme-color" content="#000000"/><meta name="description" content="Web site created using create-react-app"/><link rel="apple-touch-icon" href="/logo192.png"/><link rel="manifest" href="/manifest.json"/><title>React App</title><link href="/css/2.chunk.css" rel="stylesheet"><link href="/css/main.chunk.css" rel="stylesheet"></head><body style="height:100%"><noscript>You need to enable JavaScript to run this app.</noscript><div id="root" style="height:100%"></div><script>!function(e){function r(r){for(var n,l,a=r[0],p=r[1],f=r[2],c=0,s=[];c<a.length;c++)l=a[c],Object.prototype.hasOwnProperty.call(o,l)&&o[l]&&s.push(o[l][0]),o[l]=0;for(n in p)Object.prototype.hasOwnProperty.call(p,n)&&(e[n]=p[n]);for(i&&i(r);s.length;)s.shift()();return u.push.apply(u,f||[]),t()}function t(){for(var e,r=0;r<u.length;r++){for(var t=u[r],n=!0,a=1;a<t.length;a++){var p=t[a];0!==o[p]&&(n=!1)}n&&(u.splice(r--,1),e=l(l.s=t[0]))}return e}var n={},o={1:0},u=[];function l(r){if(n[r])return n[r].exports;var t=n[r]={i:r,l:!1,exports:{}};return e[r].call(t.exports,t,t.exports,l),t.l=!0,t.exports}l.m=e,l.c=n,l.d=function(e,r,t){l.o(e,r)||Object.defineProperty(e,r,{enumerable:!0,get:t})},l.r=function(e){"undefined"!=typeof Symbol&&Symbol.toStringTag&&Object.defineProperty(e,Symbol.toStringTag,{value:"Module"}),Object.defineProperty(e,"__esModule",{value:!0})},l.t=function(e,r){if(1&r&&(e=l(e)),8&r)return e;if(4&r&&"object"==typeof e&&e&&e.__esModule)return e;var t=Object.create(null);if(l.r(t),Object.defineProperty(t,"default",{enumerable:!0,value:e}),2&r&&"string"!=typeof e)for(var n in e)l.d(t,n,function(r){return e[r]}.bind(null,n));return t},l.n=function(e){var r=e&&e.__esModule?function(){return e.default}:function(){return e};return l.d(r,"a",r),r},l.o=function(e,r){return Object.prototype.hasOwnProperty.call(e,r)},l.p="/";var a=this.webpackJsonppage=this.webpackJsonppage||[],p=a.push.bind(a);a.push=r,a=a.slice();for(var f=0;f<a.length;f++)r(a[f]);var i=p;t()}([])</script><script src="/js/2.chunk.js"></script><script src="/js/main.chunk.js"></script></body></html>
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<title>Bot Guevara</title>
+	<meta charset="utf-8" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+	<meta name="format-detection" content="telephone=no"/>
+    <meta name="description" content=""/>
+	<meta name="keywords" content="" />
+	<meta property="og:type" content="website">
+	<meta property="og:title" content="">
+	<meta property="og:description" content="">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=2.0, minimum-scale=1.0, user-scalable=no" />
+	<link rel="shortcut icon" href="../img/favicon.ico" type="image/x-icon">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+	<link href="../css/import.css" rel="stylesheet" type="text/css" />
+	<link href="../css/aos.css" rel="stylesheet" type="text/css" />
+	
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&family=Poppins:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+	<!-- font-family: 'Poppins', sans-serif; / font-family: 'Noto Sans KR', sans-serif; / font-family: 'gomarice_goma_block', sans-serif; -->
+
+	<!--[if lt IE 9]>
+		<script src="../js/html5shiv.js"></script>
+		<script src="../js/respond.min.js"></script>
+	<![endif]-->
+	<script>
+		const CHAIN_ID = 8217;
+		const PRICE = 180;
+		const DROPS_CONTRACT_ADDRESS = "0x6448783979b734820D6Fd4E17a6c97231104E5fd";
+		const mintingDate = "2022년 4월 30일 오후 10시";
+		const totalMintingCount = "1000";
+
+		const DROPS_ABI = [
+			{
+				"constant": false,
+				"inputs": [
+				{
+					"name": "count",
+					"type": "uint256"
+				}
+				],
+				"name": "drops",
+				"outputs": [],
+				"payable": true,
+				"stateMutability": "payable",
+				"type": "function"
+			},
+			{
+				"constant": true,
+				"inputs": [],
+				"name": "getLeftDropCount",
+				"outputs": [
+				{
+					"name": "",
+					"type": "uint256"
+				}
+				],
+				"payable": false,
+				"stateMutability": "view",
+				"type": "function"
+			},
+		];
+
+		let count = 1;
+		let address;
+
+		const buy = async () => {
+			if (!window.klaytn) {
+				return alert('카이카스 지갑이 필요합니다.');
+			}
+
+			if (!address) {
+				return alert('지갑을 연결해주세요.');
+			}
+
+			const caver = new Caver(window.klaytn);
+
+			const contractAbi = new caver.contract(DROPS_ABI, DROPS_CONTRACT_ADDRESS);
+
+			const amount = PRICE < 1 ? (parseFloat(PRICE) * count).toFixed(6) : PRICE * count;
+
+			try {
+				const receipt = await contractAbi.methods.drops(count)
+					.send({
+						from: address,
+						value: caver.utils.toPeb(amount, 'KLAY'),
+						gas: '30000000',
+					});
+
+				if (receipt) {
+					return alert('구매 성공');
+				} else {
+					return alert('오류 - 클레이튼 스코프를 확인하세요');
+				}
+			} catch (e) {
+				if (e.message === 'Returned error: Error: Kaikas Tx Signature: User denied transaction signature.') {
+					return alert('취소되었습니다.');
+				} else {
+					return alert('오류 - 클레이튼 스코프를 확인하세요');
+				}
+			}
+		}
+
+		const connectWallet = () => {
+			if (!window.klaytn) {
+				return alert('카이카스 지갑이 필요합니다.');
+			}
+
+			if (address) {
+				address = null;
+				displayText();
+			} else {
+				const klaytn = window.klaytn;
+
+				const promise = klaytn.enable();
+
+				promise.then(function (result) {
+					address = result[0];
+					displayText();
+				});
+			}
+		}
+
+		const changeMintingCount = (qty) => {
+			count = qty;
+			displayText();
+		}
+
+		window.onload = () => {
+			displayText();
+			connectWallet();
+			getLeftCount();
+		}
+
+		const displayText = () => {
+			document.getElementById("mintingDate").innerHTML = mintingDate;
+			document.getElementById("totalMintingCount").innerHTML = totalMintingCount;
+			document.getElementById("mintingPrice").innerHTML = PRICE * count;
+
+			$("div.info_btn > a.i_btn01").empty();
+
+			if (address) {
+				$("div.info_btn > a.i_btn01").append(`<span></span>${address.substring(0, 6)} . . . ${address.substring(address.length - 4)}`);
+			} else {
+				$("div.info_btn > a.i_btn01").append("<span></span>지갑연결");
+			}
+		}
+
+		const getLeftCount = async () => {
+			if (window.klaytn) {
+				const caver = new Caver(window.klaytn);
+
+				const contractAbi = new caver.contract(DROPS_ABI, DROPS_CONTRACT_ADDRESS, { gasPrice: '25000000000' });
+				const leftCount = await contractAbi.call('getLeftDropCount');
+
+				document.getElementById("remainMintingCount").innerHTML = leftCount;
+			}
+		}
+	</script>
+</head>
+
+<body id="main">
+	<div id="skipNavi">
+		<ul>
+			<li>
+				<a href="#container">본문 바로가기</a>
+				<a href="#gnb">주메뉴 바로가기</a>
+			</li>
+		</ul>
+	</div>
+
+	<div id="wrap">
+		<div id="container">
+			<div class="inner">
+				<div class="contents cf">
+					<div class="img_box">
+						<div class="botimg01" data-aos="fade-up" data-aos-duration="500"><img src="../img/bot_img01.gif"></div>
+						<div class="botimg02" data-aos="fade-up" data-aos-duration="500" data-aos-delay="100"><img src="../img/bot_img02.gif"></div>
+					</div>
+
+					<div class="txt_box">
+						<h1><span>Bot</span> Guevara<br>Minting</h1>
+						<div class="info">
+							<p id="mintingDate"></p>
+							<p><span id="remainMintingCount"></span>/<span id="totalMintingCount"></span></p>
+						</div>
+						<div class="info_btn">
+							<a href="javascript:connectWallet()" class="i_btn01"><span></span>지갑연결</a>
+							<a href="https://medium.com/@BotGuevara/%EB%AF%BC%ED%8C%85%EC%95%88%EB%82%B4-6f0732dbffc" target="_blank" class="i_btn02"><span></span>정보</a>
+						</div>
+						<div class="minting_cont">
+							<p>민팅개수</p>
+							<ul>
+								<li class="minting_radio"><input onclick="javascript:changeMintingCount(1)" type="radio" value="" name="mtr" class="" id="mt01" checked><label for="mt01">1</label></li>
+								<li class="minting_radio"><input onclick="javascript:changeMintingCount(3)" type="radio" value="" name="mtr" class="" id="mt02"><label for="mt02">3</label></li>
+								<li class="minting_radio"><input onclick="javascript:changeMintingCount(5)" type="radio" value="" name="mtr" class="" id="mt03"><label for="mt03">5</label></li>
+							</ul>
+						</div>
+						<div class="minting_btn">
+							<a href="javascript:buy()">민팅시작<span>/ <span id="mintingPrice">0</span> Klay</span></a>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div id="bg"></div>
+	</div>
+
+	<script type="text/javascript" src="../js/jquery-1.12.4.min.js"></script>
+	<script type="text/javascript" src="../js/slick.min.js"></script>
+	<script type="text/javascript" src="../js/aos.js"></script>
+	<script type="text/javascript" src="../js/common.js"></script>
+
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/caver-js/1.6.5/caver.min.js" charset="utf-8"></script>
+
+	<script type="text/javascript">
+		$('#bg').css({
+			'height' : $(window).height()
+		});
+			
+		$(window).resize(function(){
+			$('#bg').css({
+				'height' : $(window).height()
+			});
+		});
+	</script>
+</body>
+</html>
