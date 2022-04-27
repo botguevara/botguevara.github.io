@@ -131,14 +131,13 @@
 		window.onload = () => {
 			displayText();
 			connectWallet();
-			getLeftCount();
 		}
 
 		const displayText = () => {
 			document.getElementById("mintingDate").innerHTML = mintingDate;
 			document.getElementById("totalMintingCount").innerHTML = totalMintingCount;
 			document.getElementById("mintingPrice").innerHTML = PRICE * count;
-
+			getLeftCount();
 			$("div.info_btn > a.i_btn01").empty();
 
 			if (address) {
