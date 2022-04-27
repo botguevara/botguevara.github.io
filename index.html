@@ -28,7 +28,7 @@
 	<script>
 		const CHAIN_ID = 8217;
 		const PRICE = 2;
-		const DROPS_CONTRACT_ADDRESS = "0x86513C88C30c24c51272cB8E68e79036bC38E098";
+		const DROPS_CONTRACT_ADDRESS = "0x96BeA60E7aa00E066772fBcd146B278e6A59827c";
 		const mintingDate = "2022년 4월 30일 오후 10시";
 		const totalMintingCount = "1448";
 
@@ -86,7 +86,7 @@
 					.send({
 						from: address,
 						value: caver.utils.toPeb(amount, 'KLAY'),
-						gas: '30000000',
+						gas: '3000000',
 					});
 
 				if (receipt) {
